@@ -1,0 +1,32 @@
+.keys{
+    position: absolute;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1em;
+    column-gap: calc(100% - 10rem);
+    padding: 2em;
+    width: 100vw;
+    color: var(--keys-color);
+    user-select: none;
+}
+
+.keys .key{
+    opacity: .4;
+}
+
+.key{
+    display: grid;
+    place-items: center;
+    width: 5rem;
+    height: 5rem;
+    font-size: 1.5em;
+    border: .25rem solid var(--keys-color);
+    border-radius: .6em;
+    cursor: pointer;
+    transition: .1s;
+}
+
+.key:active, .key.hold{
+    opacity: .7;
+}

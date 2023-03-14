@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Pong</title>
+	<link rel="stylesheet" href="./css/doc.css">
+	<link rel="stylesheet" href="./css/game/menu.css">
+	<link rel="stylesheet" href="./css/game/settings.css">
+	<link rel="stylesheet" href="./css/game/options.css">
+	<link rel="stylesheet" href="./css/game/score.css">
+	<link rel="stylesheet" href="./css/game/break.css">
+	<link rel="stylesheet" href="./css/game/keys.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="./src/menu-animation.js"></script>
+	<script src="./src/settings.js" defer></script>
+	<style>
+		body{
+			background-color: var(--bg-color);
+		}
+	</style>
+</head>
+<body>
+	<h1 class="title text">Pong</h1>
+	<ul class="menu start">
+		<li class="play text">Play</li>
+		<li class="settings text">Settings</li>
+	</ul>
+	<ul class="menu settings hide">
+		<li class="num">
+			<label class="maxScore text">Max Score: <input class="text" type="number" value="5"></label>
+		</li>
+		<li class="num">
+			<label class="maxGames text">Max Games: <input class="text" type="number" value="1"></label>
+		</li>
+		<li class="text color">
+			<span>Main Color: </span>
+			<span>Blue</span>
+		</li>
+		<li class="text buttons-hide">
+			<span>Buttons hide: </span>
+			<span>Off</span>
+		</li>
+		<li class="back">
+			<span class="text">Back</span>
+		</li>
+	</ul>
+	<ul class="menu after hide">
+		<li class="start text">Menu</li>
+	</ul>
+	<div class="score text hide">
+		<div class="score-points">
+			<span>0</span>
+			<span>0</span>
+		</div>
+		<div class="score-games">
+			<span>0</span>
+			<span>0</span>
+		</div>
+	</div>
+	<div class="keys hide">
+		<div class="key w">w</div>
+		<div class="key up">&uarr;</div>
+		<div class="key s">s</div>
+		<div class="key down">&darr;</div>
+	</div>
+	<span class="break ready text hide">Ready?</span>
+	<span class="break steady text hide">Steady</span>
+	<span class="break go text hide">Go!</span>
+	<span class="break point text hide">Player One has scored a point!</span>
+	<span class="break win text hide">Player One has won a match!</span>
+	<script>
+		const root = document.documentElement
+		root.style.setProperty('--main-color', 'rgb(240, 240, 240)')
+		const html = document.querySelector('html')
+		const body = document.querySelector('body')
+		const startGameButton = document.querySelector('.play')
+		const endGameButton = document.querySelector('.menu.after > .start')
+		const scriptID = 'gameScript'
+
+		startGameButton.addEventListener('click', function(){
+			const canvasElement = document.createElement('canvas')
+			body.appendChild(canvasElement)
+
+			const script = document.createElement('script')
+			script.setAttribute('id', scriptID)
+			script.src = './src/script.js'
+			html.appendChild(script)
+		})
+
+		endGameButton.addEventListener('click', function(){
+			const script = document.getElementById(scriptID)
+			html.removeChild(script)
+
+			const canvasElement = document.querySelector('canvas')
+			canvasElement.remove()
+
+			document.querySelector('.menu.after').classList.add('hide')
+			document.querySelector('.score').classList.add('hide')
+			document.querySelector('.keys').classList.add('hide')
+
+			const menu = document.querySelector('.menu.start').classList.remove('hide')
+			const title = document.querySelector('.title').classList.remove('hide')
+
+			const scores = document.querySelectorAll('.score span')
+			scores.forEach(el => {
+				el.textContent = 0
+			});
+		})
+	</script>
+</body>
+</html>
